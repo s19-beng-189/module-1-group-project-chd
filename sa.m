@@ -3,22 +3,34 @@ clear all % clear all variables
 clf       % and figures
 global T TS TMAX QMAX; 
 global Rs Csa dt;
+global m;
 in_sa %initialization
 Csa=Csa/2  % Dividing the compliance by 2
 for klok=1:klokmax
   t=klok*dt; 
+  %%%%%%%%%%%%%%%
+  rad = gen_plaque(current_rad,m,t);
+  Rp = resistance(n,L,rad);
+  
+  %%%%%%%%%%%%%%%%%%
   QAo=QAo_now(t);
-  Psa=Psa_new(Psa,QAo); %new Psa overwrites old
+  Psa=Psa_new(Psa,QAo,Rp); %new Psa overwrites old
   %Store values in arrays for future plotting:
   t_plot(klok)=t;
   QAo_plot(klok)=QAo;
   Psa_plot(klok)=Psa;
+  current_rad = rad;
 end
 %Now plot results in one figure 
 %with QAo(t) in upper frame
 % and Psa(t) in lower frame
 subplot(2,1,1), plot(t_plot,QAo_plot)
+xlabel('Time (m)')
+ylabel('Flow (L/m)')
+
 subplot(2,1,2), plot(t_plot,Psa_plot)
+xlabel('Time (m)')
+ylabel('Pressure (mmHg)')
 
 [pks,l1] = findpeaks(Psa_plot);
 for i = 1:length(pks)
