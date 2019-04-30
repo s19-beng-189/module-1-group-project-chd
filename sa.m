@@ -2,28 +2,38 @@
 clear all % clear all variables
 clf       % and figures
 global T TS TMAX QMAX; 
-global Rs Csa dt;
-global m;
+global Csa dt;
+global M; 
+
 in_sa %initialization
-Csa=Csa/2  % Dividing the compliance by 2
+Csa=Csa/2;  % Dividing the compliance by 2
+
 for klok=1:klokmax
   t=klok*dt; 
-  %%%%%%%%%%%%%%%
-  rad = gen_plaque(current_rad,m,t);
-  Rp = resistance(n,L,rad);
   
-  %%%%%%%%%%%%%%%%%%
+  %%% MODIFICATION FOR PROJECT %%%
+  rad = gen_plaque(curr_rad,t);  % generate radius due to plaque buildup
+  Rp = resistance(n,L,rad);      % calc resistance due to change in radius
+  curr_rad = rad;                % overwrites old curr_rad
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+ %%%%% Things to consider %%%%%
+ % Should we plot the pulse pressure against resistance?
+ % Should we plot radius and resistance over time?
+ % Consider aging and changing compliance?
+ % How can we mimic a heart attack? when QAo = 0 during systole
+  
   QAo=QAo_now(t);
   Psa=Psa_new(Psa,QAo,Rp); %new Psa overwrites old
   %Store values in arrays for future plotting:
   t_plot(klok)=t;
   QAo_plot(klok)=QAo;
   Psa_plot(klok)=Psa;
-  current_rad = rad;
+  
 end
 %Now plot results in one figure 
 %with QAo(t) in upper frame
-% and Psa(t) in lower frame
+%and Psa(t) in lower frame
 subplot(2,1,1), plot(t_plot,QAo_plot)
 xlabel('Time (m)')
 ylabel('Flow (L/m)')

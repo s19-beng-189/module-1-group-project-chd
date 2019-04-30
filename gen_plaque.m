@@ -1,11 +1,14 @@
 % The purpose of this function is to simulate the build up of plaque around
 % the wall of the artery by varying the radius of the vessel overtime.
 
-function rad= gen_plaque(current_rad,m,t) % Rad = radius of the blood vessel
-% m scaling factor, t is the current time (min)
+function rad= gen_plaque(curr_rad,t) 
+global M;
 
-rad = current_rad - m*t; % the idea here is to model Rs as a linear funct overtime
+% curr_rad is the current radius of the blood vessel
+% M is to scale how fast radius is decreasing 
+% t is the current time [min]
 
+rad = curr_rad - M*t; 
 
 
 
