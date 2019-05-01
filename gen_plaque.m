@@ -8,8 +8,8 @@ global M init_rad;
 % M is to scale how fast radius is decreasing 
 % t is the current time [min]
 
-%rad = init_rad - M*t;
-rad = init_rad
+rad = init_rad - M*t;
+
 
 
 
