@@ -20,10 +20,11 @@ QAo_plot=zeros(1,klokmax);
 Psa_plot=zeros(1,klokmax);
 
 %%% New paramters for our CHD project %%%
-M = 1;               % scaling factor to determine how fast the radius is decreasing
+M = 5;               % scaling factor to determine how fast the radius is decreasing
 MC = 0.01;           % scaling factor to dtermine how fast the compliance is decreasing
 n_PaS =  0.003;      % viscosity in (Pascal*sec)
 n = n_PaS*.0075/60;  % converted from (Pa*sec) to (mmHg*min)
 L =  4.5658e+04;     % length of blood vessel of interest (cm)
 init_rad = 1.25;     % initial radius (cm) 
 init_com = 0.0022;   % initial compliance (liters/(mmHg))
+delt_P = 100;        % pressure difference used in gen_flow.m (mmHg)
